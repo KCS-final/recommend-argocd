@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: python-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: python
+  template:
+    metadata:
+      labels:
+        app: python
+    spec:
+      nodeSelector: # 추가된 부분
+        worker: was # 워커노드에 배포되도록 설정
+      containers:
+      - name: python
+        image: feed1119/panda-recommend:latest
+        ports:
+        - containerPort: 5000
+
+
+---
+
+# python-service.yaml
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: python-service
+spec:
+  selector:
+    app: python
+  ports:
+    - protocol: TCP
+      port: 5000  # 서비스에 노출되는 포트
+      targetPort: 5000  # 파드에 포워딩되는 포트
+      nodePort: 31500 # 변경 가능: 노드 포트 번호 (30000 ~ 32767 사이의 값을 선택)
+  type: NodePort  # 서비스 유형을 NodePort로 변경
