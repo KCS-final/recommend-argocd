@@ -16,7 +16,7 @@ spec:
         worker: was # 워커노드에 배포되도록 설정
       containers:
       - name: python
-        image: feed1119/panda-recommend:6175966c1678d8baf97c4dbfb683094ecbe9d01d
+        image: feed1119/panda-recommend:4ad0f6f441bc37872def3ef680196ec6abb720b3
         ports:
         - containerPort: 5000
 
